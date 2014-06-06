@@ -1,4 +1,4 @@
-function() {
+(function() {
 
 	window.vec2 = function(x, y) {
 		var v = this
@@ -49,4 +49,4 @@ function() {
 		return v
 	}
 
-}()
+})()
