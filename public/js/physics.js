@@ -12,7 +12,7 @@
 		}
 
 		v.mag = function() {
-			return Math.sqrt(v.x * v.x, v.y * v.y)
+			return Math.sqrt(v.x * v.x + v.y * v.y)
 		}
 
 		v.hat = function() {
