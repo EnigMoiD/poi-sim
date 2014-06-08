@@ -10,7 +10,7 @@
 			end.attachSpring(s, start)
 		}
 
-		s.F = function(start, startPos, endPos) {
+		s.F = function(startPos, endPos) {
 			var spring = endPos.sub(startPos)
 
 			var x = (spring.hat()).mul(spring.mag() - s.lRest)

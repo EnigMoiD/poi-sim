@@ -46,8 +46,7 @@
 			for (var i in b.springs) {
 				var s = b.springs[i]
 
-				var F = s.spring.F(true, b.pos, s.body.pos)
-				F.print()
+				var F = s.spring.F(b.pos, s.body.pos)
 
 				sForces.push(F)
 			}

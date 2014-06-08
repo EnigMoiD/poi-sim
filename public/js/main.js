@@ -19,7 +19,7 @@
 	var spring = new Spring(.0001, 30)
 
 	spring.attachBodies(ball, blueBall)
-	var newSpring = new Spring(.01, 100)
+	var newSpring = new Spring(.001, 100)
 
 	newSpring.attachBodies(anchor, ball)
 
