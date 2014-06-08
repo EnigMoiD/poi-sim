@@ -23,6 +23,10 @@
 			b.forces.push(F)
 		}
 
+		b.addGravity = function(g) {
+			b.forces.push(g.mul(b.m))
+		}
+
 		b.netForces = function() {
 			var F = new vec2(0, 0)
 
@@ -36,22 +40,25 @@
 			return F
 		}
 
-		b.springForces = function() {
+		b.springForces = function(bodies) {
 			var sForces = []
 
 			for (var i in b.springs) {
 				var s = b.springs[i]
 
-				sForces.push(s.spring.F(s.start))
+				var F = s.spring.F(true, b.pos, s.body.pos)
+				F.print()
+
+				sForces.push(F)
 			}
 
 			return sForces
 		}
 
-		b.attachSpring = function(spring) {
+		b.attachSpring = function(spring, body) {
 			b.springs.push({
 				spring: spring,
-				start: spring.attach(b)
+				body: body
 			})
 		}
 
@@ -65,13 +72,36 @@
 		ball.color = color
 
 		ball.draw = function(ctx) {
+			var oldFill = ctx.fillStyle
+
 			ctx.fillStyle = ball.color
-			ctx.strokeStyle = ball.color
 			ctx.beginPath()
 			ctx.arc(ball.pos.x, ball.pos.y, ball.diameter, 0, 2*Math.PI)
-			ctx.stroke()
+			ctx.fill()
+
+			ctx.fillStyle = oldFill
 		}
 
 		return ball
 	}
+
+	window.Anchor = function(pos) {
+		var a = new RigidBody(pos, 1)
+
+		a.step = function() {}
+
+		a.draw = function(ctx) {
+			var oldFill = ctx.fillStyle
+
+			ctx.strokeStyle = 'black'
+			ctx.beginPath()
+			ctx.arc(a.pos.x, a.pos.y, 10, 0, 2*Math.PI)
+			ctx.stroke()
+
+			ctx.fillStyle = oldFill
+		}
+
+		return a
+	}
+
 })()

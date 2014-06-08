@@ -10,7 +10,7 @@
 		w.bodies = []
 
 		w.addBody = function(body) {
-			body.addForce(w.g)
+			body.addGravity(w.g)
 			w.bodies.push(body)
 		}
 

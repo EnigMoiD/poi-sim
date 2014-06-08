@@ -1,32 +1,21 @@
 (function() {
-	window.Spring = function(K, lRest, startPos, endPos) {
+	window.Spring = function(K, lRest) {
 		var s = this
 
 		s.K = K
 		s.lRest = lRest
-		s.startPos = startPos || null
-		s.endPos = endPos || null
 
-		s.attach = function(body) {
-			var addedStart = false
-			if (s.startPos) {
-				s.endPos = body.pos
-				addedStart = false
-			}
-			else {
-				s.startPos = body.pos
-				addedStart = true
-			}
-
-			return addedStart
+		s.attachBodies = function(start, end) {
+			start.attachSpring(s, end)
+			end.attachSpring(s, start)
 		}
 
-		s.F = function(start) {
+		s.F = function(start, startPos, endPos) {
 			var spring = endPos.sub(startPos)
 
-			var x = spring.hat().mul(spring.mag() - lRest)
+			var x = (spring.hat()).mul(spring.mag() - s.lRest)
 
-			return x.mul(s.K * start? 1 : -1)
+			return x.mul(s.K)
 		}
 
 		return s
