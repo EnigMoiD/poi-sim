@@ -46,6 +46,10 @@
 			return new vec2(v.x / a, v.y / a)
 		}
 
+		v.print = function() {
+			console.log(v.x + ', ' + v.y)
+		}
+
 		return v
 	}
 
