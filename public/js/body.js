@@ -1,5 +1,5 @@
 (function() {
-	window.RigidBody = function(m, pos) {
+	window.RigidBody = function(pos, m) {
 		var b = this
 
 		b.m = m
@@ -14,9 +14,9 @@
 			b.pos = b.pos.add(b.vel.mul(dt)).add(b.accel.mul(.5 * dt*dt))
 
 			var oldAccel = b.accel
-			b.accel = b.netForces().div(m)
+			b.accel = b.netForces().div(b.m)
 
-			b.vel = b.vel.add((oldAccel + b.accel).mul(.5 * dt))
+			b.vel = b.vel.add((oldAccel.add(b.accel)).mul(.5 * dt))
 		}
 
 		b.addForce = function(F) {
@@ -56,5 +56,22 @@
 		}
 
 		return b
+	}
+
+	window.Ball = function(pos, m, diameter, color) {
+		var ball = new RigidBody(pos, m)
+
+		ball.diameter = diameter
+		ball.color = color
+
+		ball.draw = function(ctx) {
+			ctx.fillStyle = ball.color
+			ctx.strokeStyle = ball.color
+			ctx.beginPath()
+			ctx.arc(ball.pos.x, ball.pos.y, ball.diameter, 0, 2*Math.PI)
+			ctx.stroke()
+		}
+
+		return ball
 	}
 })()
