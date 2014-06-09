@@ -3,9 +3,11 @@
 		var w = this
 
 		w.g = g
-		w.dt = dt
+		w.dt = dt/1000
 		w.canvas = canvas
 		w.ctx = ctx
+
+		w.pixPerM = 100
 
 		w.bodies = []
 
@@ -18,7 +20,7 @@
 			clearCanvas(canvas, ctx)
 			for (var i in w.bodies) {
 				w.bodies[i].step(w.dt)
-				w.bodies[i].draw(w.ctx)
+				w.bodies[i].draw(w.ctx, w.canvas.height, w.pixPerM)
 			}
 		}
 

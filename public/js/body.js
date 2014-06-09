@@ -70,12 +70,12 @@
 		ball.diameter = diameter
 		ball.color = color
 
-		ball.draw = function(ctx) {
+		ball.draw = function(ctx, canvasHeight, pixPerM) {
 			var oldFill = ctx.fillStyle
 
 			ctx.fillStyle = ball.color
 			ctx.beginPath()
-			ctx.arc(ball.pos.x, ball.pos.y, ball.diameter, 0, 2*Math.PI)
+			ctx.arc(ball.pos.x*pixPerM, canvasHeight - ball.pos.y*pixPerM, ball.diameter*pixPerM, 0, 2*Math.PI)
 			ctx.fill()
 
 			ctx.fillStyle = oldFill
@@ -89,12 +89,13 @@
 
 		a.step = function() {}
 
-		a.draw = function(ctx) {
+		a.draw = function(ctx, canvasHeight, pixPerM) {
 			var oldFill = ctx.fillStyle
 
 			ctx.strokeStyle = 'black'
 			ctx.beginPath()
-			ctx.arc(a.pos.x, a.pos.y, 10, 0, 2*Math.PI)
+
+			ctx.arc(a.pos.x*pixPerM, canvasHeight - a.pos.y*pixPerM, 1e-1*pixPerM, 0, 2*Math.PI)
 			ctx.stroke()
 
 			ctx.fillStyle = oldFill

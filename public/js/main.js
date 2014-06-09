@@ -5,22 +5,21 @@
 
 	var ctx = canvas.getContext('2d')
 
-	window.world = new World(new vec2(0, -.0001), 10, canvas, ctx)
+	window.world = new World(new vec2(0, -9.8), 1000/60, canvas, ctx)
 
-	var ball = new Ball(new vec2(50, 200), 1, 20, 'red')
-	var blueBall = new Ball(new vec2(80, 200), 2, 30, 'blue')
+	var ball = new Ball(new vec2(4, 4), 1, 5e-1, 'red')
+	var blueBall = new Ball(new vec2(4, 3), 2, 5e-1, 'blue')
 
-	var anchor = new Anchor(new vec2(80, 300))
+	var anchor = new Anchor(new vec2(4, 9))
 
 	world.addBody(ball)
 	world.addBody(blueBall)
 	world.addBody(anchor)
 
-	var spring = new Spring(.0001, 30)
-
+	var spring = new Spring(100, 1)
 	spring.attachBodies(ball, blueBall)
-	var newSpring = new Spring(.001, 100)
 
+	var newSpring = new Spring(10, 1)
 	newSpring.attachBodies(anchor, ball)
 
 	window.clearCanvas = function(canvas, ctx) {
