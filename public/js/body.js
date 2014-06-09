@@ -104,4 +104,49 @@
 		return a
 	}
 
+	window.Chain = function(link, springK, springLRest, numLinks) {
+		var c = this
+
+		c.link = link
+		c.springK = springK
+		c.springLRest = springLRest
+		c.numLinks = numLinks
+
+		c.links = []
+		c.springs = []
+
+		c.init = function() {
+			c.links.push(c.link)
+			var link, spring
+
+			for (var i = 1; i < numLinks; i++) {
+				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.springLRest), c.link.m, 5e-1, 'green')
+				c.links.push(link)
+
+				spring = new Spring(c.springK, c.springLRest)
+				spring.attachBodies(link, c.links[i-1])
+				c.springs.push(spring)
+			}
+		}
+
+		c.addGravity = function(g) {
+			for (var i in c.links)
+				c.links[i].addGravity(g)
+		}
+
+		c.step = function(dt) {
+			for (var i in c.links)
+				c.links[i].step(dt)
+		}
+
+		c.draw = function(ctx, canvasHeight, pixPerM) {
+			for (var i in c.links)
+				c.links[i].draw(ctx, canvasHeight, pixPerM)
+		}
+
+		c.init()
+
+		return c
+	}
+
 })()

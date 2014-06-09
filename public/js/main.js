@@ -7,20 +7,16 @@
 
 	window.world = new World(new vec2(0, -9.8), 1000/60, canvas, ctx)
 
-	var ball = new Ball(new vec2(4, 4), 1, 5e-1, 'red')
-	var blueBall = new Ball(new vec2(4, 3), 2, 5e-1, 'blue')
-
 	var anchor = new Anchor(new vec2(4, 9))
 
-	world.addBody(ball)
-	world.addBody(blueBall)
 	world.addBody(anchor)
 
-	var spring = new Spring(100, 1)
-	spring.attachBodies(ball, blueBall)
+	var link = new Ball(new vec2(4, 8), 1, 5e-1, 'green')
+	var chain = new Chain(link, 50, 70e-3, 4)
 
-	var newSpring = new Spring(10, 1)
-	newSpring.attachBodies(anchor, ball)
+	world.addBody(chain)
+	var hanger = new Spring(50, 1)
+	hanger.attachBodies(anchor, link)
 
 	window.clearCanvas = function(canvas, ctx) {
 		ctx.save();
