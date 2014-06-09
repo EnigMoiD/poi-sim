@@ -120,7 +120,7 @@
 			var link, spring
 
 			for (var i = 1; i < numLinks; i++) {
-				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.springLRest), c.link.m, 5e-1, 'green')
+				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y+i*c.springLRest), c.link.m, 5e-1, 'green')
 				c.links.push(link)
 
 				spring = new Spring(c.springK, c.springLRest)

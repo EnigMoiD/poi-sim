@@ -25,6 +25,15 @@
 		}
 
 		w.timer = setInterval(w.step, dt)
+		w.mouse = new Anchor(new vec2(5, 5))
+
+		w.addBody(w.mouse)
+
+		w.canvas.onmousemove = function(e) {
+			var mousePos = new vec2(e.clientX/w.pixPerM, (w.canvas.height - e.clientY)/w.pixPerM)
+
+			w.mouse.pos = mousePos
+		}
 
 		return w
 	}
