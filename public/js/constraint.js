@@ -13,9 +13,7 @@
 		s.F = function(startPos, endPos) {
 			var spring = endPos.sub(startPos)
 
-			var x = (spring.hat()).mul(spring.mag() - s.lRest)
-
-			return x.mul(s.K)
+			return spring.hat().mul(s.K*(spring.mag() - s.lRest))
 		}
 
 		return s
