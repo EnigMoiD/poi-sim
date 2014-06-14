@@ -104,28 +104,24 @@
 		return a
 	}
 
-	window.Chain = function(link, springK, springLRest, numLinks) {
+	window.Chain = function(link, spring, numLinks) {
 		var c = this
 
 		c.link = link
-		c.springK = springK
-		c.springLRest = springLRest
 		c.numLinks = numLinks
 
 		c.links = []
-		c.springs = []
+		c.spring = spring
 
 		c.init = function() {
 			c.links.push(c.link)
 			var link, spring
 
 			for (var i = 1; i < numLinks; i++) {
-				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.springLRest), c.link.m, 5e-1, 'green')
+				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.spring.lRest), c.link.m, c.spring.lRest/2, 'green')
 				c.links.push(link)
 
-				spring = new Spring(c.springK, c.springLRest)
-				spring.attachBodies(link, c.links[i-1])
-				c.springs.push(spring)
+				c.spring.attachBodies(link, c.links[i-1])
 			}
 		}
 

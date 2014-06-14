@@ -14,20 +14,31 @@
 		w.addBody = function(body) {
 			body.addGravity(w.g)
 			w.bodies.push(body)
+			w.draw()
 		}
 
 		w.step = function() {
-			clearCanvas(canvas, ctx)
-			for (var i in w.bodies) {
+			for (var i in w.bodies)
 				w.bodies[i].step(w.dt)
-				w.bodies[i].draw(w.ctx, w.canvas.height, w.pixPerM)
-			}
+			w.draw()
 		}
 
-		w.timer = setInterval(w.step, dt)
-		w.mouse = new Anchor(new vec2(5, 5))
+		w.draw = function() {
+			clearCanvas(w.canvas, w.ctx)
+			for (var i in w.bodies)
+				w.bodies[i].draw(w.ctx, w.canvas.height, w.pixPerM)
+		}
 
+		w.mouse = new Anchor(new vec2(3, 8))
 		w.addBody(w.mouse)
+
+		w.start = function() {
+			w.timer = setInterval(w.step, dt)			
+		}
+
+		w.stop = function() {
+			clearInterval(w.timer)
+		}
 
 		w.canvas.onmousemove = function(e) {
 			var mousePos = new vec2(e.clientX/w.pixPerM, (w.canvas.height - e.clientY)/w.pixPerM)

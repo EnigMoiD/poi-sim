@@ -1,19 +1,4 @@
 (function() {
-	console.log('Hello!')
-
-	var canvas = document.getElementById('poi-world')
-
-	var ctx = canvas.getContext('2d')
-
-	window.world = new World(new vec2(0, -9.8), 1000/60, canvas, ctx)
-
-	var link = new Ball(new vec2(5, 6), 1, 5e-1, 'green')
-	var chain = new Chain(link, 100, 70e-3, 4)
-
-	world.addBody(chain)
-	var hanger = new Spring(100, 1)
-	hanger.attachBodies(world.mouse, link)
-
 	window.clearCanvas = function(canvas, ctx) {
 		ctx.save();
 
@@ -22,4 +7,24 @@
 
 		ctx.restore();
 	}
+
+	console.log('Hello!')
+
+	var canvas = document.getElementById('poi-world')
+
+	var ctx = canvas.getContext('2d')
+
+	window.world = new World(new vec2(0, -9.8), 1000/250, canvas, ctx)
+
+	var linkLength = .2
+
+	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), 1, linkLength/2, 'green')
+	var chainSpring = new Spring(1000, linkLength)
+	var chain = new Chain(link, chainSpring, 10)
+
+	world.addBody(chain)
+	chainSpring.attachBodies(world.mouse, link)
+
+	var otherBall = new Ball(world.mouse.pos.sub(new vec2(0, linkLength*2)), 1, linkLength, 'blue')
+	world.addBody(otherBall)
 })()
