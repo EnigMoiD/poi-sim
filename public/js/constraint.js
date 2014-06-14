@@ -20,7 +20,7 @@
 		s.damping = function(startVel, endVel) {
 			var dVel = endVel.sub(startVel)
 
-			return dVel.mul(b*5)
+			return dVel.mul(s.b)
 		}
 
 		return s
