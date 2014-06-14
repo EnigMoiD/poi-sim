@@ -19,6 +19,10 @@
 			b.vel = b.vel.add((oldAccel.add(b.accel)).mul(.5 * dt))
 		}
 
+		b.KE = function() {
+			return .5*b.m*b.vel.mag()*b.vel.mag()
+		}
+
 		b.addForce = function(F) {
 			b.forces.push(F)
 		}
@@ -46,9 +50,8 @@
 			for (var i in b.springs) {
 				var s = b.springs[i]
 
-				var F = s.spring.F(b.pos, s.body.pos)
-
-				sForces.push(F)
+				sForces.push(s.spring.F(b.pos, s.body.pos))
+				sForces.push(s.spring.damping(b.vel, s.body.vel))
 			}
 
 			return sForces

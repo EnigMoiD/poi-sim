@@ -18,8 +18,8 @@
 
 	var linkLength = .2
 
-	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), 1, linkLength/2, 'green')
-	var chainSpring = new Spring(1000, linkLength)
+	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), 10, linkLength/2, 'green')
+	var chainSpring = new Spring(1000, .1, linkLength)
 	var chain = new Chain(link, chainSpring, 10)
 
 	world.addBody(chain)
