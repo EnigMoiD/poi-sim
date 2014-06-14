@@ -16,15 +16,14 @@
 
 	window.world = new World(new vec2(0, -9.8), 1000/250, canvas, ctx)
 
-	var linkLength = .2
+	var linkLength = .1
 
-	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), 10, linkLength/2, 'green')
-	var chainSpring = new Spring(1000, .1, linkLength)
-	var chain = new Chain(link, chainSpring, 10)
+	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), .1, linkLength/2, 'green')
+	var chainSpring = new Spring(1000, .01, linkLength)
+	var chain = new Chain(link, 20, .1)
 
 	world.addBody(chain)
 	chainSpring.attachBodies(world.mouse, link)
 
-	var otherBall = new Ball(world.mouse.pos.sub(new vec2(0, linkLength*2)), 1, linkLength, 'blue')
-	world.addBody(otherBall)
+	world.start()
 })()

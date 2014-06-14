@@ -7,20 +7,19 @@
 		b.vel = new vec2(0, 0)
 		b.accel = new vec2(0, 0)
 
+		b.prevPos = pos
+
 		b.forces = []
 		b.springs = []
 
 		b.step = function(dt) {
-			b.pos = b.pos.add(b.vel.mul(dt)).add(b.accel.mul(.5 * dt*dt))
+			var prevPos = b.pos
 
-			var oldAccel = b.accel
+			b.pos = b.pos.mul(2).sub(b.prevPos).add(b.accel.mul(dt*dt))
+
 			b.accel = b.netForces().div(b.m)
 
-			b.vel = b.vel.add((oldAccel.add(b.accel)).mul(.5 * dt))
-		}
-
-		b.KE = function() {
-			return .5*b.m*b.vel.mag()*b.vel.mag()
+			b.prevPos = prevPos
 		}
 
 		b.addForce = function(F) {
@@ -107,24 +106,23 @@
 		return a
 	}
 
-	window.Chain = function(link, spring, numLinks) {
+	window.Chain = function(link, numLinks, dist) {
 		var c = this
 
 		c.link = link
 		c.numLinks = numLinks
+		c.dist = dist
+		c.constraint = new Constraint(dist)
 
 		c.links = []
-		c.spring = spring
 
 		c.init = function() {
 			c.links.push(c.link)
-			var link, spring
+			var link
 
 			for (var i = 1; i < numLinks; i++) {
-				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.spring.lRest), c.link.m, c.spring.lRest/2, 'green')
+				link = new Ball(new vec2(c.link.pos.x, c.link.pos.y-i*c.dist), c.link.m, c.dist/2, 'green')
 				c.links.push(link)
-
-				c.spring.attachBodies(link, c.links[i-1])
 			}
 		}
 
@@ -136,6 +134,13 @@
 		c.step = function(dt) {
 			for (var i in c.links)
 				c.links[i].step(dt)
+			c.enforceConstraints()
+		}
+
+		c.enforceConstraints = function() {
+			for (var i = 1; i < numLinks; i++) {
+				c.constraint.enforce(c.links[i], c.links[i-1])
+			}
 		}
 
 		c.draw = function(ctx, canvasHeight, pixPerM) {
