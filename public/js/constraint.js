@@ -41,4 +41,29 @@
 
 		return con
 	}
+
+	window.MinMaxConstraint = function(minLength, maxLength) {
+		var con = this
+
+		con.minLength = minLength
+		con.maxLength = maxLength
+
+		con.enforce = function(start, end) {
+			var avg = end.pos.add(start.pos).div(2)
+			var dir = end.pos.sub(start.pos)
+
+			if (dir.mag() < minLength) {
+				dir = dir.hat()
+				start.pos = avg.sub(dir.mul(con.minLength/2))
+				end.pos = avg.add(dir.mul(con.minLength/2))
+			}
+			else if (dir.mag() > maxLength) {
+				dir = dir.hat()
+				start.pos = avg.sub(dir.mul(con.maxLength/2))
+				end.pos = avg.add(dir.mul(con.maxLength/2))
+			}
+		}
+
+		return con
+	}
 })()
