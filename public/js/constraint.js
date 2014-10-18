@@ -26,6 +26,20 @@
 		return s
 	}
 
+	window.Link = function(constraint, start, end) {
+		var l = this
+
+		l.constraint = constraint
+		l.start = start
+		l.end = end
+
+		l.enforce = function() {
+			l.constraint.enforce(l.start, l.end)
+		}
+
+		return l
+	}
+
 	window.Constraint = function(length) {
 		var con = this
 

@@ -51,14 +51,14 @@
 		}
 
 		c.step = function(dt) {
+			c.enforceConstraints()
 			for (var i in c.links)
 				c.links[i].step(dt)
-			c.enforceConstraints()
 		}
 
 		c.enforceConstraints = function() {
 			for (var i = 1; i < numLinks; i++)
-				c.constraint.enforce(c.links[i], c.links[i-1])
+				c.constraint.enforce(c.links[i-1], c.links[i])
 		}
 
 		c.draw = function(ctx, canvasHeight, pixPerM) {

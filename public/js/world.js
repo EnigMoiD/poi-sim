@@ -13,15 +13,26 @@
 
 		w.bodies = []
 
+		w.links = []
+
 		w.addBody = function(body) {
 			body.addGravity(w.g)
 			w.bodies.push(body)
 			w.draw()
 		}
 
+		w.addLink = function(link) {
+			w.links.push(link)
+		}
+
 		w.step = function() {
 			for (var i in w.bodies)
 				w.bodies[i].step(w.dt)
+
+			for (var i in w.links)
+				w.links[i].enforce()
+
+			w.mouse.pos = w.mousePos
 		}
 
 		w.draw = function() {
@@ -44,9 +55,7 @@
 		}
 
 		w.canvas.onmousemove = function(e) {
-			var mousePos = new vec2(e.clientX/w.pixPerM, (w.canvas.height - e.clientY)/w.pixPerM)
-
-			w.mouse.pos = mousePos
+			w.mousePos = new vec2(e.clientX/w.pixPerM, (w.canvas.height - e.clientY)/w.pixPerM)
 		}
 
 		return w

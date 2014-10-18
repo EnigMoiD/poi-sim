@@ -19,15 +19,13 @@
 	var linkLength = .1
 
 	var link = new Ball(world.mouse.pos.sub(new vec2(0, linkLength)), .05, linkLength/2, 'green')
-	var chain = new Chain(link, 20, .1)
+	var chain = new Chain(link, 20, linkLength)
 
 	var ball = new Ball(world.mouse.pos.sub(new vec2(0, linkLength*21)), 1, linkLength, 'blue')
 	
-	var chainSpring = new Spring(1000, .1, linkLength)
-
 	var poi = new Poi(ball, chain)
 
-	chainSpring.attachBodies(world.mouse, link)
+	world.addLink(new Link(new Constraint(linkLength), world.mouse, chain.firstLink))
 
 	world.addBody(poi)
 	world.start()
